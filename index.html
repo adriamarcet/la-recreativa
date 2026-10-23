@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2a1d45">
+<title>La Recreativa</title>
+<meta name="description" content="Jocs en pixel art per jugar al mòbil: El Menjallapis i el Rei de l'Olla.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/press-start-2p.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Press Start 2P";src:url("assets/fonts/press-start-2p.woff2") format("woff2");font-display:swap}
+
+/* Layout: una sala de recreatives; capçalera amb rètol de neó en píxels i dues "màquines" (targetes) que s'apilen al mòbil */
+:root{
+  --bg:#2a1d45;
+  --bg-deep:#1a1230;
+  --panel:#fff8ec;
+  --ink:#2a1d45;
+  --ink-soft:#5a4a78;
+  --cream:#fff6e0;
+  --gold:#ffcc3d;
+  --red:#d8344a;
+  --blue:#3a7be0;
+  --pixel:"Press Start 2P", ui-monospace, "Courier New", monospace;
+  --body:system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{background:var(--bg)}
+body{
+  margin:0;min-height:100%;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,.07) 1px, transparent 1.5px) 0 0/8px 8px,
+    var(--bg);
+  color:var(--cream);font:16px/1.55 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 40px;
+}
+.wrap{max-width:860px;margin:0 auto}
+
+header{padding-block:44px 28px;text-align:center}
+.sign{
+  display:inline-block;font:clamp(22px,6.4vw,44px)/1.25 var(--pixel);color:var(--gold);
+  text-shadow:3px 3px 0 var(--red),6px 6px 0 var(--bg-deep);
+  margin:0;text-wrap:balance;letter-spacing:.02em;
+}
+.sign span{display:block;font-size:.42em;color:var(--cream);text-shadow:2px 2px 0 var(--bg-deep);letter-spacing:.08em;margin-top:14px}
+.intro{max-width:34em;margin:22px auto 0;color:#d9cde6;text-wrap:pretty}
+.coin{display:inline-block;width:10px;height:10px;background:var(--gold);box-shadow:0 0 0 2px var(--bg-deep);margin-right:8px;vertical-align:1px;animation:blink 1.2s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:28px;margin-top:8px}
+.machine{
+  position:relative;display:flex;flex-direction:column;min-width:0;
+  background:var(--panel);color:var(--ink);
+  border:4px solid var(--bg-deep);box-shadow:8px 8px 0 var(--bg-deep);
+  text-decoration:none;transition:transform .12s steps(2),box-shadow .12s steps(2);
+}
+.machine:hover{transform:translate(-3px,-3px);box-shadow:11px 11px 0 var(--bg-deep)}
+.machine:active{transform:translate(4px,4px);box-shadow:4px 4px 0 var(--bg-deep)}
+.machine:focus-visible{outline:4px solid var(--gold);outline-offset:4px}
+.marquee{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;background:var(--bg-deep);color:var(--gold);font:11px/1.4 var(--pixel)}
+.marquee .who{color:var(--cream);font-size:9px;letter-spacing:.06em;white-space:nowrap}
+.screen{display:block;background:var(--bg-deep);padding:0 14px 14px}
+.screen img{display:block;width:100%;height:auto;aspect-ratio:9/14;object-fit:cover;object-position:top;image-rendering:pixelated;border:3px solid #3d2b63}
+.info{display:flex;flex-direction:column;gap:12px;padding:18px 18px 20px;flex:1}
+.info h2{margin:0;font:15px/1.5 var(--pixel);color:var(--red);text-wrap:balance}
+.info p{margin:0;color:var(--ink-soft)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.tags li{font:8px/1 var(--pixel);letter-spacing:.06em;padding:6px 8px;border:2px solid var(--ink);background:#fff}
+.play{
+  margin-top:auto;align-self:flex-start;font:12px/1 var(--pixel);letter-spacing:.06em;
+  color:var(--ink);background:var(--gold);padding:13px 18px;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);
+}
+.machine:hover .play{background:#ffe07a}
+
+.how{margin-top:44px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px}
+.how div{border-top:4px dotted #5a4a78;padding-top:14px;min-width:0}
+.how h3{margin:0 0 6px;font:10px/1.5 var(--pixel);color:var(--gold);letter-spacing:.04em}
+.how p{margin:0;color:#d9cde6;font-size:15px}
+footer{margin-top:44px;text-align:center;font:8px/1.8 var(--pixel);color:#8f84a3;letter-spacing:.06em}
+
+@media (prefers-reduced-motion:reduce){.coin{animation:none}.machine,.machine:hover,.machine:active{transition:none;transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 class="sign">LA RECREATIVA<span>Jocs de píxel</span></h1>
+    <p class="intro"><span class="coin" aria-hidden="true"></span>Dos jocs per jugar al mòbil, sense instal·lar res. Tria una màquina i toca per començar.</p>
+  </header>
+
+  <main class="games">
+    <a class="machine" href="jocs/menjallapis/">
+      <span class="marquee"><span>Màquina 1</span><span class="who">1 JUGADOR</span></span>
+      <span class="screen"><img src="assets/img/menjallapis.png" width="624" height="1110" alt="Pantalla d'inici del Menjallapis: un monstre pelut i blau amb dents grosses"></span>
+      <span class="info">
+        <h2>El Menjallapis</h2>
+        <p>Mou el monstre amb el dit i mastega només el llapis del color que et demana. Si t'equivoques, rot de colors! Caça els llapis màgics: arc de Sant Martí, or, gel i imant.</p>
+        <ul class="tags"><li>COLORS</li><li>REFLEXOS</li><li>BLANC I NEGRE OK</li></ul>
+        <span class="play">JUGA &gt;</span>
+      </span>
+    </a>
+
+    <a class="machine" href="jocs/rei-de-lolla/">
+      <span class="marquee"><span>Màquina 2</span><span class="who">2 JUGADORS</span></span>
+      <span class="screen"><img src="assets/img/rei-de-lolla.png" width="624" height="1110" alt="Pantalla d'inici del Rei de l'Olla: el Macarró contra el Tomàquet"></span>
+      <span class="info">
+        <h2>Rei de l'Olla</h2>
+        <p>El Macarró i el Tomàquet es barallen per l'olla de macarrons. Tira els daus, pica amb la cullera, pon ous i fes evolucionar les cries. Narra en Xup-Xup, de Ràdio Olla.</p>
+        <ul class="tags"><li>DAUS</li><li>Estratègia</li><li>AMB VEU</li></ul>
+        <span class="play">JUGA &gt;</span>
+      </span>
+    </a>
+  </main>
+
+  <section class="how" aria-label="Consells">
+    <div><h3>Al mòbil</h3><p>Funcionen millor amb el mòbil dret. Tots els controls són tocar o arrossegar el dit.</p></div>
+    <div><h3>SO I VEU</h3><p>El so comença quan toques la pantalla. La veu d'en Xup-Xup va millor a Chrome.</p></div>
+    <div><h3>Rècords</h3><p>El Menjallapis guarda el teu rècord en aquest mòbil.</p></div>
+  </section>
+
+  <footer>FET A CASA · 2026</footer>
+</div>
+</body>
+</html>
