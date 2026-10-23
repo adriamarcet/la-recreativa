@@ -58,7 +58,7 @@ body{
 
 <script>
 (()=>{
-const W=180,H=320,FLOOR=214,FX=52;
+const W=180,H=320,FLOOR=214,FX=58,BOXY=231,WIN=16,NSPEED=64;
 const cv=document.getElementById('game'),ctx=cv.getContext('2d');
 ctx.imageSmoothingEnabled=false;
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -163,8 +163,8 @@ const TOTAL=MACHINES.length;
 let state='title',st=0,stageN=0,score=0,stageStart=0,best=0,newBest=false;
 try{best=parseInt(localStorage.getItem('fiore-best')||'0',10)||0}catch(e){}
 let M,hp,timeLeft,gauge,chain,mult,lastHit,buf,combos,shake,flash,koT,tally;
-let parts,fxs,floats,banner,pose,poseT,turboT,hold,pressed;
-const KEYS={p:{col:'#e8561a',dk:'#8a2e14',label:'PUNY',dmg:2},k:{col:'#3a7be0',dk:'#1f4a99',label:'PATADA',dmg:3},h:{col:'#f5c52a',dk:'#a8861a',label:'CAP',dmg:4}};
+let parts,fxs,floats,banner,pose,poseT,turboT,hold,pressed,notes,noteT;
+const KEYS={p:{col:'#e8561a',dk:'#8a2e14',label:'PUNY',dmg:4},k:{col:'#3a7be0',dk:'#1f4a99',label:'PATADA',dmg:6},h:{col:'#f5c52a',dk:'#a8861a',label:'CAP',dmg:8}};
 const BTN=[{k:'p',x:8,y:262,w:52,h:50},{k:'k',x:64,y:262,w:52,h:50},{k:'h',x:120,y:262,w:52,h:50}];
 const SUPER={x:8,y:244,w:164,h:13};
 const CRACK=[];
@@ -179,6 +179,7 @@ function startStage(i,keepScore){
     for(let s=0;s<9;s++){const dx=Math.floor(r()*5)-1,dy=Math.floor(r()*4)+1;for(let q=0;q<4;q++){px+=Math.sign(dx)||0;py+=q<dy?1:0;d.push([px,py])}}
     CRACK.push(d);
   }
+  notes=[];noteT=.9;
   state='intro';st=0;sfx('go');
 }
 function newGame(){score=0;gauge=0;newBest=false;startStage(0,false)}
@@ -218,20 +219,31 @@ function act(k){
   sfx(k);
   dealDamage(dmg);
   if(state!=='play')return;
-  // combos de 3 tocs
-  if(buf.length&&now-buf[buf.length-1].t>.6)buf=[];
   buf.push({k,t:now});if(buf.length>3)buf.shift();
-  if(buf.length===3){
-    const a=buf[0].k,b=buf[1].k,c=buf[2].k;let name=null,bd=0,pts=0,g=0,col='#ffe45a';
-    if(a===b&&b===c){name={p:'TRIPLE PUNY!',k:'TRIPLE PATADA!',h:'TRIPLE CAP!'}[a];bd={p:12,k:18,h:24}[a];pts={p:150,k:250,h:400}[a];g=12;col=KEYS[a].col==='#3a7be0'?'#7ab0ff':KEYS[a].col}
-    else if(a!==b&&b!==c&&a!==c){name='COMBO TOTAL!';bd=30;pts=600;g=20;col='#ff4fa0'}
-    if(name){
-      combos++;buf=[];
-      const p=hitPoint();
-      score+=Math.round(pts*mult);dealDamage(bd);gauge=Math.min(100,gauge+g);
-      shake=Math.max(shake,7);flash=.18;fxs.push({x:p.x,y:p.y,t:.22,big:2.2});spawnSparks(12,p.x,p.y);spawnParts(8,p.x,p.y);
-      popBanner(name,col,name.length>12?10:12);sfx('combo');
-    }
+  checkNotes();
+}
+const PNAME={p:'TRIPLE PUNY!',k:'TRIPLE PATADA!',h:'TRIPLE CAP!'};
+function checkNotes(){
+  if(buf.length<3)return;
+  const seq=buf.map(b=>b.k).join('');
+  for(const n of notes){
+    const dy=Math.abs(n.y-BOXY);
+    if(n.hit||dy>WIN||n.pat.join('')!==seq)continue;
+    n.hit=true;n.t=.25;buf=[];combos++;
+    const [a,b,c]=n.pat,perfect=dy<=5,f=perfect?1.6:1;
+    let name,bd,pts,g,col;
+    if(a===b&&b===c){name=PNAME[a];bd={p:50,k:70,h:90}[a];pts={p:200,k:300,h:450}[a];g=15;col=a==='k'?'#7ab0ff':KEYS[a].col}
+    else if(a!==b&&b!==c&&a!==c){name='COMBO TOTAL!';bd=110;pts=700;g=25;col='#ff4fa0'}
+    else{name='RÀFEGA!';bd=40;pts=150;g=10;col='#ffe45a'}
+    const p=hitPoint();
+    score+=Math.round(pts*f*mult);gauge=Math.min(100,gauge+g+(perfect?10:0));
+    shake=Math.max(shake,perfect?9:6);flash=.18;fxs.push({x:p.x,y:p.y,t:.22,big:perfect?2.6:2});
+    spawnSparks(12,p.x,p.y);spawnParts(8,p.x,p.y);
+    popBanner(name,col,name.length>12?10:12);
+    addFloat(perfect?'PERFECTE!':'BÉ!',6,BOXY-30,perfect?'#ffcc3d':'#fff6e0');
+    sfx('combo');
+    dealDamage(Math.round(bd*f));
+    return;
   }
 }
 function turbo(){
@@ -242,7 +254,7 @@ function turbo(){
   dealDamage(80);
 }
 function ko(){
-  state='ko';koT=0;st=0;banner=null;floats=[];
+  state='ko';koT=0;st=0;banner=null;floats=[];notes=[];
   const t=Math.ceil(timeLeft);
   tally={time:t*100,perfect:combos>=6};
   score+=tally.time+(tally.perfect?1000:0);
@@ -272,11 +284,18 @@ function update(dt){
   if(state==='play'){
     if(chain&&st-lastHit>.5){chain=0;mult=1}
     timeLeft-=dt;
+    noteT-=dt;
+    if(noteT<=0&&timeLeft>3){
+      const K=['p','k','h'];notes.push({pat:[0,1,2].map(()=>K[Math.floor(Math.random()*3)]),y:100,hit:false,t:0,missed:false});
+      noteT=rnd(2.2,3.2);
+    }
+    for(const n of notes){if(n.hit)n.t-=dt;else{n.y+=NSPEED*dt;if(n.y>BOXY+WIN)n.missed=true}}
+    notes=notes.filter(n=>n.hit?n.t>0:n.y<250);
     const dm=1-hp/M.hp;
     if(dm>.35&&Math.random()<dt*10*dm)parts.push({x:M.x+rnd(-M.w/3,M.w/3),y:FLOOR-M.h,vx:rnd(-.2,.2),vy:-rnd(.4,.9),w:3,h:3,c:'#6b6b73',g:-.01,life:1.2,spark:true});
     if(dm>.7&&Math.random()<dt*3)spawnSparks(3,M.x+rnd(-M.w/3,M.w/3),FLOOR-M.h*rnd(.3,1));
     if(Math.ceil(timeLeft)<=5&&Math.ceil(timeLeft)!==Math.ceil(timeLeft+dt))sfx('tick');
-    if(timeLeft<=0){timeLeft=0;state='late';st=0;chain=0;sfx('late');shake=0}
+    if(timeLeft<=0){timeLeft=0;state='late';st=0;chain=0;notes=[];sfx('late');shake=0}
   }else if(state==='intro'){
     if(st>1.9){state='play';st=0;sfx('go')}
   }else if(state==='ko'){koT+=dt}
@@ -313,7 +332,7 @@ function drawFiore(x,y,p,t,sc){
   Q(6+h,-41+B,2,3,SKS);
   if(mouth){Q(3+h,-39+B,4,3,'#5a2a2a');Q(3+h,-39+B,4,1,'#f4eede')}else Q(3+h,-38+B,3,1,'#8a4a3a');
   // braç del davant
-  if(p==='p'||p==='h'){
+  if(p==='p'){
     Q(8+lean,-33,12,5,J);Q(18+lean,-33,2,5,JS);Q(20+lean,-34,6,7,SK);Q(25+lean,-34,1,7,SKS);
   }else if(p==='t'){
     Q(8,-36,12,5,J);Q(18,-36,2,5,JS);Q(20,-37,7,7,SK);Q(8,-29,12,5,J);Q(20,-30,7,7,SK);
@@ -403,11 +422,28 @@ function drawHUD(){
   txt(M.slogan,90,63,8,'#ff9ac8','center','#0a0910');
 }
 function drawStrip(){
+  const inWin=notes.some(n=>!n.hit&&Math.abs(n.y-BOXY)<=WIN);
+  R(6,104,44,136,'rgba(10,6,24,.5)');R(6,104,1,136,'#5a3f8a');R(49,104,1,136,'#5a3f8a');
+  for(let y=112;y<222;y+=16)R(8,y,40,1,'rgba(255,255,255,.07)');
+  for(const n of notes){
+    if(n.hit){const a=Math.max(0,n.t/.25);R(8,n.y-8,40,16,'rgba(255,255,255,'+a.toFixed(2)+')');continue}
+    const near=Math.abs(n.y-BOXY)<=WIN;
+    for(let i=0;i<3;i++){
+      const x=10+i*14,y=Math.round(n.y)-6;
+      R(x-1,y-1,12,12,near?'#ffffff':'#0a0910');
+      R(x,y,10,10,n.missed?'#55506a':KEYS[n.pat[i]].col);
+      if(!n.missed)R(x,y,10,2,'rgba(255,255,255,.35)');
+    }
+  }
+  const fc=inWin?(Math.floor(st*10)%2?'#ffffff':'#ffcc3d'):'#5a3f8a';
+  R(7,221,42,1,fc);R(7,240,42,1,fc);R(7,221,1,20,fc);R(48,221,1,20,fc);
   for(let i=0;i<3;i++){
     const b=buf[i],x=10+i*14;
-    R(x-1,225,12,12,'#0a0910');R(x,226,10,10,b?KEYS[b.k].col:'#3d2a63');
+    R(x-1,225,12,1,'#0a0910');R(x-1,236,12,1,'#0a0910');R(x-1,225,1,12,'#0a0910');R(x+10,225,1,12,'#0a0910');
+    if(b){R(x+2,228,6,6,'#0a0910');R(x+3,229,4,4,KEYS[b.k].col)}
   }
   if(chain>1)txt('x'+(mult%1?mult.toFixed(1):mult)+'  '+chain,172,227,8,mult>1?'#ffcc3d':'#fff6e0','right','#0a0910');
+  if(stageN===0&&state==='play'&&st<9)txt('ENCAIXA ELS COLORS!',90,106,8,'#fff6e0','center','#0a0910');
 }
 function drawBanner(){
   if(!banner)return;
@@ -430,7 +466,7 @@ function draw(){
     drawFiore(90,196,'w',t,1.5);
   }else{
     let fx=FX,pp=pose;
-    if(pp==='p')fx+=5;else if(pp==='k')fx+=3;else if(pp==='h')fx+=9;else if(pp==='t')fx+=14;
+    if(pp==='p')fx+=4;else if(pp==='k')fx+=4;else if(pp==='h')fx+=10;else if(pp==='t')fx+=8;
     if(state==='ko'&&koT>.6)pp='w';
     if(state==='late')pp=null;
     drawFiore(fx,FLOOR+4,pp,t);
@@ -456,9 +492,9 @@ function drawTitle(t){
   R(0,236,W,84,'#140c26');R(0,236,W,2,'#ffcc3d');
   txt('TRENCA LES MÀQUINES',90,246,8,'#ffcc3d','center');
   txt('DEL CAPITAL!',90,258,8,'#ff9ac8','center');
-  txt('PUNY, PATADA I CAP:',90,274,8,'#fff6e0','center');
-  txt('3 IGUALS O 3 DIFERENTS',90,286,8,'#fff6e0','center');
-  txt('= COMBO!',90,298,8,'#fff6e0','center');
+  txt('PUNY, PATADA I CAP.',90,274,8,'#fff6e0','center');
+  txt('ELS COLORS QUE CAIEN',90,286,8,'#fff6e0','center');
+  txt("ENCAIXA'LS = COMBO!",90,298,8,'#fff6e0','center');
   blinkTxt('TOCA PER JUGAR',310,'#ffcc3d');
   if(best)txt('REC '+pad(best,6),154,6,8,'#ffcc3d','right','#0a0910');
 }
