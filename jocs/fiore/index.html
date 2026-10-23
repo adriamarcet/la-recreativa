@@ -105,7 +105,7 @@ const sfx=k=>{try{SFX[k]()}catch(e){}};
 /* ---------- màquines (Turbocapitalisme) ---------- */
 function lcg(s){return()=>(s=(s*1664525+1013904223)>>>0)/4294967296}
 const MACHINES=[
-  {name:'NEVERA',slogan:'GARANTIA: 1 DIA',hp:1000,time:35,w:52,h:96,parts:['#e6ecf0','#c3ccd4','#7a858e','#e0334a'],dentCol:'#c3ccd4',
+  {name:'NEVERA',hp:1000,time:35,w:52,h:96,parts:['#e6ecf0','#c3ccd4','#7a858e','#e0334a'],dentCol:'#c3ccd4',
    dents:[[8,40,14,10,.2],[28,22,12,9,.4],[10,64,12,8,.6],[30,56,14,12,.8]],
    draw(x,y){const L=x-26;
      R(L,y-96,52,94,'#e6ecf0');R(L+44,y-96,8,94,'#c3ccd4');R(L,y-96,52,3,'#ffffff');
@@ -113,7 +113,7 @@ const MACHINES=[
      R(L,y-64,52,2,'#8d98a2');R(L+38,y-90,3,18,'#7a858e');R(L+38,y-58,3,26,'#7a858e');
      R(L+6,y-86,18,9,'#e0334a');R(L+8,y-84,14,1,'#fff');R(L+8,y-82,8,1,'#fff');
      R(L+6,y-54,10,2,'#9aa5ae');R(L+6,y-50,6,2,'#9aa5ae');}},
-  {name:'SOFÀ',slogan:'FINANÇAT AL 29% TAE',hp:1250,time:35,w:88,h:56,parts:['#b0456b','#c85580','#7a2a48','#f4eede'],dentCol:'#8e3556',
+  {name:'SOFÀ',hp:1250,time:35,w:88,h:56,parts:['#b0456b','#c85580','#7a2a48','#f4eede'],dentCol:'#8e3556',
    dents:[[10,12,14,8,.2],[40,30,16,9,.4],[62,14,14,9,.6],[24,34,16,8,.8]],
    draw(x,y){const L=x-44;
      R(L+6,y-56,76,30,'#b0456b');R(L+6,y-56,76,3,'#c85580');R(L+43,y-54,2,28,'#8e3556');
@@ -122,7 +122,7 @@ const MACHINES=[
      R(L+4,y-8,8,8,'#4a2a1a');R(L+76,y-8,8,8,'#4a2a1a');
      R(L+16,y-18,14,2,'#7a2a48');R(L+58,y-18,14,2,'#7a2a48');
      R(L+36,y-64,16,8,'#f4eede');R(L+37,y-62,14,1,'#c0392b');}},
-  {name:'RENTADORA',slogan:'SUBSCRIPCIÓ MENSUAL',hp:1500,time:38,w:60,h:70,parts:['#f2f2f6','#cfd4e4','#6fb0e8','#3a7be0'],dentCol:'#cfd4e4',
+  {name:'RENTADORA',hp:1500,time:38,w:60,h:70,parts:['#f2f2f6','#cfd4e4','#6fb0e8','#3a7be0'],dentCol:'#cfd4e4',
    dents:[[6,32,12,10,.2],[40,20,14,9,.4],[8,52,14,10,.6],[42,46,12,12,.8]],
    draw(x,y,d,t){const L=x-30;
      R(L,y-70,60,70,'#f2f2f6');R(L+52,y-70,8,70,'#d4d8e6');R(L,y-70,60,12,'#cfd4e4');
@@ -132,7 +132,7 @@ const MACHINES=[
      R(x-8,y-42,6,3,'#c9e6fb');R(x+3,y-26,5,2,'#4a8fd0');
      const wv=Math.floor(Math.sin(t*5)*2);R(x-10+wv,y-30,8,3,'#ffffff');R(x+2-wv,y-24,8,3,'#e0334a');
      R(L+4,y-3,6,3,'#666');R(L+50,y-3,6,3,'#666');R(L+22,y-9,16,3,'#e0334a');}},
-  {name:'CAFETERA',slogan:'CÀPSULA: 0,60 EUR',hp:1750,time:38,w:50,h:92,parts:['#2a2a30','#d8344a','#6a4226','#9ac3e0'],dentCol:'#18181c',
+  {name:'CAFETERA',hp:1750,time:38,w:50,h:92,parts:['#2a2a30','#d8344a','#6a4226','#9ac3e0'],dentCol:'#18181c',
    dents:[[6,50,12,10,.2],[28,36,14,9,.4],[8,72,12,10,.6],[28,62,12,12,.8]],
    draw(x,y){const L=x-25;
      R(L,y-90,50,8,'#18181c');R(L+4,y-82,20,30,'#9ac3e0');R(L+4,y-70,20,18,'#5a8fb8');R(L+6,y-80,4,24,'#d6ecf8');
@@ -141,7 +141,7 @@ const MACHINES=[
      R(L+20,y-46,10,6,'#555');R(L+22,y-40,6,6,'#777');
      R(L+10,y-22,30,3,'#555');R(L+16,y-30,18,8,'#f4eede');R(L+18,y-28,14,3,'#6a4226');
      R(L,y-2,50,2,'#18181c');R(L+8,y-14,34,12,'#3a3a42');R(L+10,y-12,30,2,'#d8344a');}},
-  {name:'ARCADE',slogan:'INSERTA MÉS MONEDES',hp:2400,time:45,w:52,h:100,parts:['#2b3fa8','#e8b82a','#1a1f4a','#ff4fa0'],dentCol:'#1a2a78',
+  {name:'ARCADE',hp:2400,time:45,w:52,h:100,parts:['#2b3fa8','#e8b82a','#1a1f4a','#ff4fa0'],dentCol:'#1a2a78',
    dents:[[6,28,12,10,.15],[30,18,14,9,.3],[8,60,12,10,.45],[32,52,12,12,.6],[18,74,16,10,.8]],
    draw(x,y,d,t){const L=x-26;
      R(L,y-100,52,100,'#2b3fa8');R(L+44,y-100,8,100,'#1a2a78');
@@ -158,12 +158,21 @@ const MACHINES=[
      R(L+4,y-2,8,2,'#0a0f1c');R(L+40,y-2,8,2,'#0a0f1c');}}
 ];
 const TOTAL=MACHINES.length;
+// Frases de la màquina a mesura que la trenques (màx. 22 caràcters)
+const QUIPS=[
+  ['GARANTIA: FINS AHIR','ELS IOGURTS FUGEN!','NO ES PODIA REPARAR','ERA DE MARCA BLANCA','ADÉU, CUBETES DE GEL','NOVA: 3.999 EUR'],
+  ['FINANÇAT AL 29% TAE','PELL 100% DE PLÀSTIC','ESTAVA DE REBAIXES!','EL FARCIT ERA OPCIONAL','ET SEURÀS AL TERRA','TE\'N QUEDEN 35 QUOTES'],
+  ['SUBSCRIPCIÓ MENSUAL','CENTRIFUGAR: +5 EUR','I ARA, QUI EM PLANXA?','NOMÉS TRIGA 4 HORES','PROGRAMA RÀPID: +5 EUR','ET FALTAVA EL PREMIUM'],
+  ['CÀPSULA: 0,60 EUR','NO ÉS CAFÈ, ÉS ESTIL','CÀPSULA NO RECICLABLE','DESCALCIFICA: +30 EUR','I ARA QUI FA EL CAFÈ?','ERA EDICIÓ LIMITADA!'],
+  ['INSERTA MÉS MONEDES','CONTINUAR? 1 EUR MÉS','PAGA PER GUANYAR!','DLC: +10 EUR','EL FINAL ÉS DE PAGA','CAIXA DE BOTÍ BUIDA!']
+];
+const QTH=[.08,.22,.38,.54,.70,.85];
 
 /* ---------- joc ---------- */
 let state='title',st=0,stageN=0,score=0,stageStart=0,best=0,newBest=false;
 try{best=parseInt(localStorage.getItem('fiore-best')||'0',10)||0}catch(e){}
 let M,hp,timeLeft,gauge,chain,mult,lastHit,buf,combos,shake,flash,koT,tally;
-let parts,fxs,floats,banner,pose,poseT,turboT,hold,pressed,notes,noteT;
+let parts,fxs,floats,banner,pose,poseT,turboT,hold,pressed,notes,noteT,qi,quip;
 const KEYS={p:{col:'#e8561a',dk:'#8a2e14',label:'PUNY',dmg:4},k:{col:'#3a7be0',dk:'#1f4a99',label:'PATADA',dmg:6},h:{col:'#f5c52a',dk:'#a8861a',label:'CAP',dmg:8}};
 const BTN=[{k:'p',x:8,y:262,w:52,h:50},{k:'k',x:64,y:262,w:52,h:50},{k:'h',x:120,y:262,w:52,h:50}];
 const SUPER={x:8,y:244,w:164,h:13};
@@ -179,7 +188,7 @@ function startStage(i,keepScore){
     for(let s=0;s<9;s++){const dx=Math.floor(r()*5)-1,dy=Math.floor(r()*4)+1;for(let q=0;q<4;q++){px+=Math.sign(dx)||0;py+=q<dy?1:0;d.push([px,py])}}
     CRACK.push(d);
   }
-  notes=[];noteT=.9;
+  notes=[];noteT=.9;qi=0;quip=null;
   state='intro';st=0;sfx('go');
 }
 function newGame(){score=0;gauge=0;newBest=false;startStage(0,false)}
@@ -219,32 +228,37 @@ function act(k){
   sfx(k);
   dealDamage(dmg);
   if(state!=='play')return;
-  buf.push({k,t:now});if(buf.length>3)buf.shift();
-  checkNotes();
+  tryLock(k);
 }
 const PNAME={p:'TRIPLE PUNY!',k:'TRIPLE PATADA!',h:'TRIPLE CAP!'};
-function checkNotes(){
-  if(buf.length<3)return;
-  const seq=buf.map(b=>b.k).join('');
-  for(const n of notes){
-    const dy=Math.abs(n.y-BOXY);
-    if(n.hit||dy>WIN||n.pat.join('')!==seq)continue;
-    n.hit=true;n.t=.25;buf=[];combos++;
-    const [a,b,c]=n.pat,perfect=dy<=5,f=perfect?1.6:1;
-    let name,bd,pts,g,col;
-    if(a===b&&b===c){name=PNAME[a];bd={p:50,k:70,h:90}[a];pts={p:200,k:300,h:450}[a];g=15;col=a==='k'?'#7ab0ff':KEYS[a].col}
-    else if(a!==b&&b!==c&&a!==c){name='COMBO TOTAL!';bd=110;pts=700;g=25;col='#ff4fa0'}
-    else{name='RÀFEGA!';bd=40;pts=150;g=10;col='#ffe45a'}
-    const p=hitPoint();
-    score+=Math.round(pts*f*mult);gauge=Math.min(100,gauge+g+(perfect?10:0));
-    shake=Math.max(shake,perfect?9:6);flash=.18;fxs.push({x:p.x,y:p.y,t:.22,big:perfect?2.6:2});
-    spawnSparks(12,p.x,p.y);spawnParts(8,p.x,p.y);
-    popBanner(name,col,name.length>12?10:12);
-    addFloat(perfect?'PERFECTE!':'BÉ!',6,BOXY-30,perfect?'#ffcc3d':'#fff6e0');
-    sfx('combo');
-    dealDamage(Math.round(bd*f));
+function tryLock(k){
+  for(const g of notes){
+    if(g.failed||g.done)continue;
+    const p=g.pieces.find(q=>q.st==='fall');
+    if(!p)continue;
+    const dy=Math.abs(p.y-BOXY);
+    if(dy>WIN||p.k!==k)continue;
+    p.st='lock';p.dy=dy;g.locks++;
+    tone(900+g.locks*250,1500+g.locks*250,.08,'square',.05);
+    if(g.locks===3)comboDone(g);
     return;
   }
+}
+function comboDone(g){
+  g.done=true;g.t=.35;combos++;
+  const [a,b,c]=g.pieces.map(q=>q.k),perfect=g.pieces.every(q=>q.dy<=6),f=perfect?1.6:1;
+  let name,bd,pts,gg,col;
+  if(a===b&&b===c){name=PNAME[a];bd={p:120,k:160,h:200}[a];pts={p:300,k:450,h:600}[a];gg=20;col=a==='k'?'#7ab0ff':KEYS[a].col}
+  else if(a!==b&&b!==c&&a!==c){name='COMBO TOTAL!';bd=260;pts=900;gg=30;col='#ff4fa0'}
+  else{name='RÀFEGA!';bd=90;pts=250;gg=12;col='#ffe45a'}
+  const p=hitPoint();
+  score+=Math.round(pts*f*mult);gauge=Math.min(100,gauge+gg+(perfect?10:0));
+  shake=Math.max(shake,perfect?9:6);flash=.18;fxs.push({x:p.x,y:p.y,t:.22,big:perfect?2.6:2});
+  spawnSparks(12,p.x,p.y);spawnParts(8,p.x,p.y);
+  popBanner(name,col,name.length>12?10:12);
+  addFloat(perfect?'PERFECTE!':'BÉ!',6,BOXY-30,perfect?'#ffcc3d':'#fff6e0');
+  sfx('combo');
+  dealDamage(Math.round(bd*f));
 }
 function turbo(){
   if(state!=='play'||gauge<100)return;
@@ -284,13 +298,27 @@ function update(dt){
   if(state==='play'){
     if(chain&&st-lastHit>.5){chain=0;mult=1}
     timeLeft-=dt;
+    if(quip){quip.time-=dt;if(quip.time<=0)quip=null}
+    {const dq=1-hp/M.hp;let q=-1;while(qi<QTH.length&&dq>=QTH[qi]){q=qi;qi++}
+     if(q>=0)quip={t:QUIPS[stageN][q],time:2.8}}
     noteT-=dt;
-    if(noteT<=0&&timeLeft>3){
-      const K=['p','k','h'];notes.push({pat:[0,1,2].map(()=>K[Math.floor(Math.random()*3)]),y:100,hit:false,t:0,missed:false});
-      noteT=rnd(2.2,3.2);
+    if(noteT<=0&&timeLeft>4){
+      const K=['p','k','h'];
+      notes.push({pieces:[0,1,2].map(i=>({k:K[Math.floor(Math.random()*3)],y:100-i*34,st:'fall',dy:99})),locks:0,failed:false,done:false,t:0});
+      noteT=rnd(3,3.8);
     }
-    for(const n of notes){if(n.hit)n.t-=dt;else{n.y+=NSPEED*dt;if(n.y>BOXY+WIN)n.missed=true}}
-    notes=notes.filter(n=>n.hit?n.t>0:n.y<250);
+    for(const g of notes){
+      if(g.done){g.t-=dt;continue}
+      for(const q of g.pieces){
+        if(q.st==='lock'||q.st==='gone')continue;
+        q.y+=NSPEED*dt;
+        if(q.st==='fall'&&q.y>BOXY+WIN&&!g.failed){
+          g.failed=true;addFloat('FALLAT!',6,BOXY-30,'#ff7a7a');
+          for(const r of g.pieces)r.st=r.st==='lock'?'gone':'miss';
+        }
+      }
+    }
+    notes=notes.filter(g=>g.done?g.t>0:g.pieces.some(q=>q.st!=='gone'&&q.y<250));
     const dm=1-hp/M.hp;
     if(dm>.35&&Math.random()<dt*10*dm)parts.push({x:M.x+rnd(-M.w/3,M.w/3),y:FLOOR-M.h,vx:rnd(-.2,.2),vy:-rnd(.4,.9),w:3,h:3,c:'#6b6b73',g:-.01,life:1.2,spark:true});
     if(dm>.7&&Math.random()<dt*3)spawnSparks(3,M.x+rnd(-M.w/3,M.w/3),FLOOR-M.h*rnd(.3,1));
@@ -355,9 +383,9 @@ function drawBackdrop(t){
   const r=lcg(5);
   for(let x=0;x<W;x+=12){const h=14+Math.floor(r()*32);R(x,FLOOR-h-6,12,h,'#150a28');
     for(let wy=0;wy<h-4;wy+=6)if(r()<.45)R(x+3,FLOOR-h-3+wy,2,3,'#ffcc3d')}
-  const on=Math.floor(t*3)%7!==0;
+  if(state!=='title'){const on=Math.floor(t*3)%7!==0;
   R(8,78,164,22,'#140a24');R(8,78,164,1,'#ff4fa0');R(8,99,164,1,'#ff4fa0');
-  txt('TURBOCAPITALISME',90,85,8,on?'#ff4fa0':'#7a2a58','center');
+  txt('TURBOCAPITALISME',90,85,8,on?'#ff4fa0':'#7a2a58','center')}
   R(0,FLOOR,W,28,'#2a1b45');R(0,FLOOR+28,W,H,'#140c26');
   for(let x=-(FLOOR%1);x<W;x+=22)R(x,FLOOR,1,28,'#3d2a63');
   R(0,FLOOR,W,2,'#5a3f8a');R(0,FLOOR+13,W,1,'#3d2a63');R(0,FLOOR+27,W,1,'#140c26');
@@ -419,28 +447,35 @@ function drawHUD(){
   R(bx,56,Math.round(bw*hp/M.hp),3,'#d89a1a');
   txt(M.name,bx+2,50,8,'#fff6e0','left','#0a0910');
   txt(Math.round(100-100*hp/M.hp)+'%',bx+bw-2,50,8,'#fff6e0','right','#0a0910');
-  txt(M.slogan,90,63,8,'#ff9ac8','center','#0a0910');
+  if(quip&&state==='play'){
+    const age=2.8-quip.time;
+    if(quip.time>.5||Math.floor(quip.time*10)%2)txt(quip.t,90,63,8,age<.25?'#ffffff':'#ff9ac8','center','#0a0910');
+  }
 }
 function drawStrip(){
-  const inWin=notes.some(n=>!n.hit&&Math.abs(n.y-BOXY)<=WIN);
   R(6,104,44,136,'rgba(10,6,24,.5)');R(6,104,1,136,'#5a3f8a');R(49,104,1,136,'#5a3f8a');
   for(let y=112;y<222;y+=16)R(8,y,40,1,'rgba(255,255,255,.07)');
-  for(const n of notes){
-    if(n.hit){const a=Math.max(0,n.t/.25);R(8,n.y-8,40,16,'rgba(255,255,255,'+a.toFixed(2)+')');continue}
-    const near=Math.abs(n.y-BOXY)<=WIN;
-    for(let i=0;i<3;i++){
-      const x=10+i*14,y=Math.round(n.y)-6;
+  const nowIn=[false,false,false];let lockedCols=[null,null,null];
+  ctx.save();ctx.beginPath();ctx.rect(7,104,42,136);ctx.clip();
+  for(const g of notes){
+    if(g.done){const a=Math.max(0,g.t/.35);R(8,BOXY-8,40,16,'rgba(255,255,255,'+a.toFixed(2)+')')}
+    g.pieces.forEach((q,i)=>{
+      if(q.st==='lock'||g.done)lockedCols[i]=KEYS[q.k].col;
+      if(q.st==='lock'||q.st==='gone')return;
+      const near=q.st==='fall'&&Math.abs(q.y-BOXY)<=WIN;
+      if(near)nowIn[i]=true;
+      const x=10+i*14,y=Math.round(q.y)-6;
       R(x-1,y-1,12,12,near?'#ffffff':'#0a0910');
-      R(x,y,10,10,n.missed?'#55506a':KEYS[n.pat[i]].col);
-      if(!n.missed)R(x,y,10,2,'rgba(255,255,255,.35)');
-    }
+      R(x,y,10,10,q.st==='miss'?'#55506a':KEYS[q.k].col);
+      if(q.st==='fall')R(x,y,10,2,'rgba(255,255,255,.35)');
+    });
   }
-  const fc=inWin?(Math.floor(st*10)%2?'#ffffff':'#ffcc3d'):'#5a3f8a';
-  R(7,221,42,1,fc);R(7,240,42,1,fc);R(7,221,1,20,fc);R(48,221,1,20,fc);
+  ctx.restore();
   for(let i=0;i<3;i++){
-    const b=buf[i],x=10+i*14;
+    const x=10+i*14,fc=nowIn[i]?(Math.floor(st*10)%2?'#ffffff':'#ffcc3d'):'#5a3f8a';
+    R(x-2,224,14,1,fc);R(x-2,237,14,1,fc);R(x-2,224,1,14,fc);R(x+11,224,1,14,fc);
     R(x-1,225,12,1,'#0a0910');R(x-1,236,12,1,'#0a0910');R(x-1,225,1,12,'#0a0910');R(x+10,225,1,12,'#0a0910');
-    if(b){R(x+2,228,6,6,'#0a0910');R(x+3,229,4,4,KEYS[b.k].col)}
+    if(lockedCols[i]){R(x+1,227,8,8,'#0a0910');R(x+2,228,6,6,lockedCols[i])}
   }
   if(chain>1)txt('x'+(mult%1?mult.toFixed(1):mult)+'  '+chain,172,227,8,mult>1?'#ffcc3d':'#fff6e0','right','#0a0910');
   if(stageN===0&&state==='play'&&st<9)txt('ENCAIXA ELS COLORS!',90,106,8,'#fff6e0','center','#0a0910');
@@ -487,8 +522,10 @@ function draw(){
 function blinkTxt(s,y,c){if(Math.floor(performance.now()/450)%2)txt(s,90,y,8,c||'#fff6e0','center','#0a0910')}
 function drawTitle(t){
   R(0,0,W,120,'rgba(20,12,38,.35)');
-  txt('FIORE',90,10,24,'#ffcc3d','center','#d8344a');
-  txt('CONTRA EL',90,42,8,'#fff6e0','center','#0a0910');
+  R(8,6,164,68,'#140c26');R(8,6,164,2,'#ffcc3d');R(8,72,164,2,'#ffcc3d');
+  txt('FIORE',90,14,24,'#ffcc3d','center','#d8344a');
+  txt('CONTRA EL',90,46,8,'#ff9ac8','center');
+  txt('TURBOCAPITALISME',90,58,10,'#ffffff','center','#d8344a');
   R(0,236,W,84,'#140c26');R(0,236,W,2,'#ffcc3d');
   txt('TRENCA LES MÀQUINES',90,246,8,'#ffcc3d','center');
   txt('DEL CAPITAL!',90,258,8,'#ff9ac8','center');
@@ -496,7 +533,7 @@ function drawTitle(t){
   txt('ELS COLORS QUE CAIEN',90,286,8,'#fff6e0','center');
   txt("ENCAIXA'LS = COMBO!",90,298,8,'#fff6e0','center');
   blinkTxt('TOCA PER JUGAR',310,'#ffcc3d');
-  if(best)txt('REC '+pad(best,6),154,6,8,'#ffcc3d','right','#0a0910');
+  if(best)txt('REC '+pad(best,6),90,80,8,'#ffcc3d','center','#0a0910');
 }
 function drawIntro(){
   R(0,112,W,58,'rgba(20,12,38,.8)');R(0,112,W,2,'#ff4fa0');R(0,168,W,2,'#ff4fa0');
