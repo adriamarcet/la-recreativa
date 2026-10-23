@@ -29,3 +29,9 @@
   from = "/llapis"
   to = "/jocs/menjallapis/"
   status = 301
+
+# l'adreça antiga del joc de Fiore
+[[redirects]]
+  from = "/jocs/fiore/*"
+  to = "/jocs/turbocapitalisme/:splat"
+  status = 301

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <meta name="theme-color" content="#2a1d45">
-<title>Fiore contra el Turbocapitalisme</title>
+<title>Turbocapitalisme: En Fiore contra el món</title>
 <link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="../../assets/fonts/press-start-2p.woff2" as="font" type="font/woff2" crossorigin>
 <style>@font-face{font-family:"Press Start 2P";src:url("../../assets/fonts/press-start-2p.woff2") format("woff2");font-display:swap}
@@ -43,7 +43,7 @@ body{
 <body>
 <div id="stage">
   <div id="box">
-    <canvas id="game" width="180" height="320" aria-label="Joc Fiore contra el Turbocapitalisme"></canvas>
+    <canvas id="game" width="180" height="320" aria-label="Joc Turbocapitalisme: En Fiore contra el món"></canvas>
     <button id="snd" type="button" aria-label="Treure el so" aria-pressed="false">
       <svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
         <rect x="2" y="6" width="3" height="4" fill="currentColor"/>
@@ -645,9 +645,9 @@ function blinkTxt(s,y,c){if(Math.floor(performance.now()/450)%2)txt(s,90,y,8,c||
 function drawTitle(t){
   R(0,0,W,120,'rgba(20,12,38,.35)');
   R(8,6,164,68,'#140c26');R(8,6,164,2,'#ffcc3d');R(8,72,164,2,'#ffcc3d');
-  txt('FIORE',90,14,24,'#ffcc3d','center','#d8344a');
-  txt('CONTRA EL',90,46,8,'#ff9ac8','center');
-  txt('TURBOCAPITALISME',90,58,10,'#ffffff','center','#d8344a');
+  txt('TURBOCAPITALISME',90,14,10,'#ffffff','center','#d8344a');
+  txt('EN FIORE',90,32,20,'#ffcc3d','center','#d8344a');
+  txt('CONTRA EL MÓN',90,58,8,'#ff9ac8','center');
   R(0,236,W,84,'#140c26');R(0,236,W,2,'#ffcc3d');
   txt('TRENCA LES MÀQUINES',90,246,8,'#ffcc3d','center');
   txt('DEL CAPITAL!',90,258,8,'#ff9ac8','center');
