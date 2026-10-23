@@ -6,6 +6,7 @@ Jocs en pixel art per jugar al navegador del mòbil, sense instal·lar res.
 | --- | --- | --- |
 | El Menjallapis | 1 | `/jocs/menjallapis/` (o `/llapis`) |
 | Rei de l'Olla | 2 al mateix mòbil | `/jocs/rei-de-lolla/` (o `/olla`) |
+| Blocaventura | 1 | `/jocs/blocaventura/` |
 
 ## Estructura
 
@@ -13,6 +14,7 @@ Jocs en pixel art per jugar al navegador del mòbil, sense instal·lar res.
 index.html                    Portada amb l'accés als jocs
 jocs/menjallapis/index.html   El Menjallapis (un sol fitxer: HTML + CSS + JS)
 jocs/rei-de-lolla/index.html  Rei de l'Olla (un sol fitxer: HTML + CSS + JS)
+jocs/blocaventura/index.html  Blocaventura (un sol fitxer: HTML + CSS + JS)
 assets/fonts/                 Tipografia Press Start 2P (llicència OFL, a OFL.txt)
 assets/img/                   Captures per a la portada i favicon
 netlify.toml                  Configuració de Netlify (sense build)
