@@ -3,137 +3,203 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#2a1d45">
+<meta name="theme-color" content="#e3ad12">
 <title>La Recreativa</title>
 <meta name="description" content="Jocs en pixel art per jugar al mòbil: El Menjallapis, el Rei de l'Olla i Blocaventura.">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="assets/fonts/press-start-2p.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-@font-face{font-family:"Press Start 2P";src:url("assets/fonts/press-start-2p.woff2") format("woff2");font-display:swap}
-
-/* Layout: una sala de recreatives; capçalera amb rètol de neó en píxels i dues "màquines" (targetes) que s'apilen al mòbil */
+/* Layout: pàgina plana d'un sol color amb línies fines de 1px. Capçalera de tres columnes i una graella on cada casella és un joc (esprai en píxels, nom i descripció). */
 :root{
-  --bg:#2a1d45;
-  --bg-deep:#1a1230;
-  --panel:#fff8ec;
-  --ink:#2a1d45;
-  --ink-soft:#5a4a78;
-  --cream:#fff6e0;
-  --gold:#ffcc3d;
-  --red:#d8344a;
-  --blue:#3a7be0;
-  --pixel:"Press Start 2P", ui-monospace, "Courier New", monospace;
-  --body:system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  color-scheme:dark;
+  --bg:#e3ad12;
+  --ink:#111;
+  --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  color-scheme:light;
 }
 *,*::before,*::after{box-sizing:border-box}
-:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{background:var(--bg)}
 body{
-  margin:0;min-height:100%;
-  background:
-    radial-gradient(circle at 1px 1px, rgba(255,255,255,.07) 1px, transparent 1.5px) 0 0/8px 8px,
-    var(--bg);
-  color:var(--cream);font:16px/1.55 var(--body);
-  padding-left:max(16px,env(safe-area-inset-left,0px));
-  padding-right:max(16px,env(safe-area-inset-right,0px));
-  padding-block:0 40px;
+  margin:0;min-height:100vh;background:var(--bg);color:var(--ink);
+  font:14px/1.5 var(--mono);
+  padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
 }
-.wrap{max-width:860px;margin:0 auto}
+a{color:inherit}
 
-header{padding-block:44px 28px;text-align:center}
-.sign{
-  display:inline-block;font:clamp(22px,6.4vw,44px)/1.25 var(--pixel);color:var(--gold);
-  text-shadow:3px 3px 0 var(--red),6px 6px 0 var(--bg-deep);
-  margin:0;text-wrap:balance;letter-spacing:.02em;
+.bar{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;
+  margin:0 24px;padding:16px 0 12px;border-bottom:1px solid var(--ink);
+  box-shadow:0 4px 0 var(--bg),0 5px 0 var(--ink);
 }
-.sign span{display:block;font-size:.42em;color:var(--cream);text-shadow:2px 2px 0 var(--bg-deep);letter-spacing:.08em;margin-top:14px}
-.intro{max-width:34em;margin:22px auto 0;color:#d9cde6;text-wrap:pretty}
-.coin{display:inline-block;width:10px;height:10px;background:var(--gold);box-shadow:0 0 0 2px var(--bg-deep);margin-right:8px;vertical-align:1px;animation:blink 1.2s steps(2) infinite}
-@keyframes blink{50%{opacity:.25}}
+.bar .mid{text-align:center;letter-spacing:.06em}
+.bar .end{text-align:right}
 
-.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:28px;margin-top:8px}
-.machine{
+.intro{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0 24px;
+  margin:0 24px;padding:18px 0 22px;
+}
+.intro > div{grid-column:span 1}
+.intro > div:first-child{grid-column:2}
+.intro h2{margin:0;font:inherit;font-weight:700}
+.intro p{margin:0}
+
+.games{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  margin:0 24px;border-top:1px solid var(--ink);border-left:1px solid var(--ink);
+}
+.cell{
   position:relative;display:flex;flex-direction:column;min-width:0;
-  background:var(--panel);color:var(--ink);
-  border:4px solid var(--bg-deep);box-shadow:8px 8px 0 var(--bg-deep);
-  text-decoration:none;transition:transform .12s steps(2),box-shadow .12s steps(2);
+  border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);
+  padding:14px 16px 18px;text-decoration:none;color:var(--ink);
 }
-.machine:hover{transform:translate(-3px,-3px);box-shadow:11px 11px 0 var(--bg-deep)}
-.machine:active{transform:translate(4px,4px);box-shadow:4px 4px 0 var(--bg-deep)}
-.machine:focus-visible{outline:4px solid var(--gold);outline-offset:4px}
-.marquee{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;background:var(--bg-deep);color:var(--gold);font:11px/1.4 var(--pixel)}
-.marquee .who{color:var(--cream);font-size:9px;letter-spacing:.06em;white-space:nowrap}
-.screen{display:block;background:var(--bg-deep);padding:0 14px 14px}
-.screen img{display:block;width:100%;height:auto;aspect-ratio:9/14;object-fit:cover;object-position:top;image-rendering:pixelated;border:3px solid #3d2b63}
-.info{display:flex;flex-direction:column;gap:12px;padding:18px 18px 20px;flex:1}
-.info h2{margin:0;font:15px/1.5 var(--pixel);color:var(--red);text-wrap:balance}
-.info p{margin:0;color:var(--ink-soft)}
-.tags{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
-.tags li{font:8px/1 var(--pixel);letter-spacing:.06em;padding:6px 8px;border:2px solid var(--ink);background:#fff}
-.play{
-  margin-top:auto;align-self:flex-start;font:12px/1 var(--pixel);letter-spacing:.06em;
-  color:var(--ink);background:var(--gold);padding:13px 18px;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);
+.cell:hover,.cell:focus-visible{background:var(--ink);color:var(--bg);outline:none}
+.cell:focus-visible{outline:3px solid var(--ink);outline-offset:-6px}
+.top{display:flex;justify-content:space-between;gap:12px;font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+.art{flex:1;display:flex;align-items:center;justify-content:center;padding:28px 0 24px;min-height:280px}
+.art svg{display:block;width:min(100%,300px);height:auto;fill:currentColor;shape-rendering:crispEdges}
+.cell h3{margin:0;text-align:center;font:inherit;font-size:15px;font-weight:700}
+.cell p{margin:10px auto 0;max-width:34em;text-align:center;font-size:13px}
+.tags{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;list-style:none;margin:14px 0 0;padding:0;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.tags li{border:1px solid currentColor;padding:2px 7px}
+.go{margin-top:16px;text-align:center;font-weight:700;letter-spacing:.06em;text-decoration:underline;text-underline-offset:3px}
+
+.soon{
+  display:flex;align-items:center;justify-content:center;min-height:200px;
+  border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);
+  font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  background:repeating-linear-gradient(45deg,transparent 0 9px,rgba(17,17,17,.12) 9px 10px);
 }
-.machine:hover .play{background:#ffe07a}
 
-.how{margin-top:44px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px}
-.how div{border-top:4px dotted #5a4a78;padding-top:14px;min-width:0}
-.how h3{margin:0 0 6px;font:10px/1.5 var(--pixel);color:var(--gold);letter-spacing:.04em}
-.how p{margin:0;color:#d9cde6;font-size:15px}
-footer{margin-top:44px;text-align:center;font:8px/1.8 var(--pixel);color:#8f84a3;letter-spacing:.06em}
+footer{margin:0 24px;padding:14px 0 20px;display:flex;justify-content:space-between;gap:16px;font-size:12px}
 
-@media (prefers-reduced-motion:reduce){.coin{animation:none}.machine,.machine:hover,.machine:active{transition:none;transform:none}}
+@media (max-width:900px){
+  .games,.intro{grid-template-columns:repeat(2,1fr)}
+  .intro > div:first-child{grid-column:auto}
+  .soon{display:none}
+}
+@media (max-width:620px){
+  .bar{grid-template-columns:1fr auto;margin:0 16px}
+  .bar .mid{display:none}
+  .intro,.games,footer{margin-left:16px;margin-right:16px}
+  .intro,.games{grid-template-columns:1fr}
+  .intro{gap:18px}
+  .art{min-height:220px}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1 class="sign">LA RECREATIVA<span>Jocs de píxel</span></h1>
-    <p class="intro"><span class="coin" aria-hidden="true"></span>Tres jocs per jugar al mòbil, sense instal·lar res. Tria una màquina i toca per començar.</p>
-  </header>
+<header class="bar">
+  <span><a href="./">La Recreativa</a> presenta…</span>
+  <span class="mid" aria-hidden="true">⚡⚡⚡⚡⚡ JOCS DE PÍXEL!! ⚡⚡⚡⚡⚡</span>
+  <span class="end">2026</span>
+</header>
 
-  <main class="games">
-    <a class="machine" href="jocs/menjallapis/">
-      <span class="marquee"><span>Màquina 1</span><span class="who">1 JUGADOR</span></span>
-      <span class="screen"><img src="assets/img/menjallapis.png" width="624" height="1110" alt="Pantalla d'inici del Menjallapis: un monstre pelut i blau amb dents grosses"></span>
-      <span class="info">
-        <h2>El Menjallapis</h2>
-        <p>Mou el monstre amb el dit i mastega només el llapis del color que et demana. Si t'equivoques, rot de colors! Caça els llapis màgics: arc de Sant Martí, or, gel i imant.</p>
-        <ul class="tags"><li>COLORS</li><li>REFLEXOS</li><li>BLANC I NEGRE OK</li></ul>
-        <span class="play">JUGA &gt;</span>
-      </span>
-    </a>
+<section class="intro" aria-label="Presentació">
+  <div>
+    <h2>La Recreativa</h2>
+    <p>Tres jocs en pixel art per jugar al mòbil, sense instal·lar res. Fets a casa, amb personatges originals i res de pantalles de càrrega. Toca una casella i comença.</p>
+  </div>
+  <div>
+    <h2>Com es juga</h2>
+    <p>Funcionen millor amb el mòbil dret. Tots els controls són tocar o arrossegar el dit. El so comença quan toques la pantalla. La veu d'en Xup-Xup va millor a Chrome. El Menjallapis guarda el teu rècord en aquest mòbil.</p>
+  </div>
+</section>
 
-    <a class="machine" href="jocs/rei-de-lolla/">
-      <span class="marquee"><span>Màquina 2</span><span class="who">2 JUGADORS</span></span>
-      <span class="screen"><img src="assets/img/rei-de-lolla.png" width="624" height="1110" alt="Pantalla d'inici del Rei de l'Olla: el Macarró contra el Tomàquet"></span>
-      <span class="info">
-        <h2>Rei de l'Olla</h2>
-        <p>El Macarró i el Tomàquet es barallen per l'olla de macarrons. Tira els daus, pica amb la cullera, pon ous i fes evolucionar les cries. Narra en Xup-Xup, de Ràdio Olla.</p>
-        <ul class="tags"><li>DAUS</li><li>Estratègia</li><li>AMB VEU</li></ul>
-        <span class="play">JUGA &gt;</span>
-      </span>
-    </a>
-    <a class="machine" href="jocs/blocaventura/">
-      <span class="marquee"><span>Màquina 3</span><span class="who">1 JUGADOR</span></span>
-      <span class="screen"><img src="assets/img/blocaventura.png" width="624" height="1110" alt="Pantalla de Blocaventura: en Pixel a punt de saltar pel prat, amb un bloc de diamant al fons"></span>
-      <span class="info">
-        <h2>Blocaventura</h2>
-        <p>Ajuda en Pixel a creuar tres mons de blocs: el prat, el bosc de cirerers i les terres de foc. Salta sobre els monstres, pica blocs de diamant i troba pics, pomes i plomes màgiques.</p>
-        <ul class="tags"><li>PLATAFORMES</li><li>SALTS</li><li>3 MONS</li></ul>
-        <span class="play">JUGA &gt;</span>
-      </span>
-    </a>
-  </main>
+<main class="games">
+  <a class="cell" href="jocs/menjallapis/" aria-label="El Menjallapis, 1 jugador">
+    <span class="top"><span>01</span><span>1 jugador</span></span>
+    <span class="art"><svg data-sprite="monstre" role="img" aria-label="Un monstre pelut amb dents grosses"></svg></span>
+    <h3>El Menjallapis</h3>
+    <p>Mou el monstre amb el dit i mastega només el llapis del color que et demana. Si t'equivoques, rot de colors! Caça els llapis màgics: arc de Sant Martí, or, gel i imant.</p>
+    <ul class="tags"><li>Colors</li><li>Reflexos</li><li>Blanc i negre ok</li></ul>
+    <span class="go">Juga &gt;</span>
+  </a>
 
-  <section class="how" aria-label="Consells">
-    <div><h3>Al mòbil</h3><p>Funcionen millor amb el mòbil dret. Tots els controls són tocar o arrossegar el dit.</p></div>
-    <div><h3>SO I VEU</h3><p>El so comença quan toques la pantalla. La veu d'en Xup-Xup va millor a Chrome.</p></div>
-    <div><h3>Rècords</h3><p>El Menjallapis guarda el teu rècord en aquest mòbil.</p></div>
-  </section>
+  <a class="cell" href="jocs/rei-de-lolla/" aria-label="Rei de l'Olla, 2 jugadors">
+    <span class="top"><span>02</span><span>2 jugadors</span></span>
+    <span class="art"><svg data-sprite="olla" role="img" aria-label="Una olla amb vapor"></svg></span>
+    <h3>Rei de l'Olla</h3>
+    <p>El Macarró i el Tomàquet es barallen per l'olla de macarrons. Tira els daus, pica amb la cullera, pon ous i fes evolucionar les cries. Narra en Xup-Xup, de Ràdio Olla.</p>
+    <ul class="tags"><li>Daus</li><li>Estratègia</li><li>Amb veu</li></ul>
+    <span class="go">Juga &gt;</span>
+  </a>
 
-  <footer>FET A CASA · 2026</footer>
-</div>
+  <a class="cell" href="jocs/blocaventura/" aria-label="Blocaventura, 1 jugador">
+    <span class="top"><span>03</span><span>1 jugador</span></span>
+    <span class="art"><svg data-sprite="pixel" role="img" aria-label="En Pixel saltant sobre uns blocs"></svg></span>
+    <h3>Blocaventura</h3>
+    <p>Ajuda en Pixel a creuar tres mons de blocs: el prat, el bosc de cirerers i les terres de foc. Salta sobre els monstres, pica blocs de diamant i troba pics, pomes i plomes màgiques.</p>
+    <ul class="tags"><li>Plataformes</li><li>Salts</li><li>3 mons</li></ul>
+    <span class="go">Juga &gt;</span>
+  </a>
+
+  <div class="soon" aria-hidden="true">Aviat més jocs…</div>
+</main>
+
+<footer><span>Fet a casa</span><span>⚡ Insereix moneda ⚡</span></footer>
+
+<script>
+/* Cada esprai és un mapa de bits: "#" és un quadrat ple, qualsevol altre caràcter és buit. */
+var SPRITES={
+  monstre:[
+    "................",
+    "..#..........#..",
+    "...##########...",
+    "..############..",
+    ".##############.",
+    ".###.##..##.###.",
+    ".###.##..##.###.",
+    ".##############.",
+    ".##############.",
+    ".#.##.##.##.##..",
+    ".#.##.##.##.##..",
+    ".##############.",
+    "..############..",
+    "...##.####.##..."
+  ],
+  olla:[
+    "....#..#..#.....",
+    ".....#..#..#....",
+    "....#..#..#.....",
+    "................",
+    "..############..",
+    "################",
+    "##.##########.##",
+    "#..##########..#",
+    "##.##########.##",
+    "..############..",
+    "..############..",
+    "...##########..."
+  ],
+  pixel:[
+    "......####......",
+    ".....######.....",
+    ".....#.##.#.....",
+    ".....######.....",
+    "......####......",
+    "....########....",
+    "...##.####.##...",
+    "...##.####.##...",
+    "....#.#..#.#....",
+    ".....##..##.....",
+    "................",
+    "####.####.####.#",
+    "####.####.####.#",
+    "####.####.####.#"
+  ]
+};
+var NS="http://www.w3.org/2000/svg";
+document.querySelectorAll("svg[data-sprite]").forEach(function(svg){
+  var rows=SPRITES[svg.getAttribute("data-sprite")],w=0,x,y;
+  rows.forEach(function(r){w=Math.max(w,r.length)});
+  svg.setAttribute("viewBox","0 0 "+w+" "+rows.length);
+  for(y=0;y<rows.length;y++)for(x=0;x<rows[y].length;x++){
+    if(rows[y][x]!=="#")continue;
+    var r=document.createElementNS(NS,"rect");
+    r.setAttribute("x",x+.06);r.setAttribute("y",y+.06);
+    r.setAttribute("width",.88);r.setAttribute("height",.88);
+    svg.appendChild(r);
+  }
+});
+</script>
 </body>
 </html>
