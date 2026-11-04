@@ -162,29 +162,36 @@ function mouGat(dt){
   if(gat.x>GAT.max){gat.x=GAT.max;gat.dir=-1;gat.espera=1.2;}
 }
 
-// Ulls del gat gran de l'habitació 2: parpellegen i et miren
-const ULLS=[{x:959,y:726},{x:1350,y:724}];
-let parpella=0,properParpelleig=2.5,mirada={x:0,y:0};
+// Ulls dels gats grans del fons (sala d'estar, habitació 1 i habitació 2): parpellegen i et miren
+// c = centre del gat (cap a on mira), k = mida dels ulls
+const GATS=[
+  {c:{x:287,y:272},k:.85,ulls:[{x:190,y:277},{x:430,y:262}],par:0,prop:1.2,m:{x:0,y:0}},
+  {c:{x:1255,y:190},k:1.5,ulls:[{x:1055,y:183},{x:1457,y:198}],par:0,prop:3.1,m:{x:0,y:0}},
+  {c:{x:1155,y:726},k:1,ulls:[{x:959,y:726},{x:1350,y:724}],par:0,prop:2.5,m:{x:0,y:0}}
+];
 function mouUlls(dt){
-  properParpelleig-=dt;
-  if(properParpelleig<=0){parpella=.16;properParpelleig=2+Math.random()*3.5;if(Math.random()<.25)properParpelleig=.35;}
-  if(parpella>0)parpella-=dt;
-  const dx=b.x-1155,dy=b.y-726,d=Math.hypot(dx,dy)||1,k=Math.min(1,d/300);
-  mirada.x+=(dx/d*5.5*k-mirada.x)*Math.min(1,dt*6); mirada.y+=(dy/d*4.5*k-mirada.y)*Math.min(1,dt*6);
+  for(const g of GATS){
+    g.prop-=dt;
+    if(g.prop<=0){g.par=.16;g.prop=2+Math.random()*3.5;if(Math.random()<.25)g.prop=.35;}
+    if(g.par>0)g.par-=dt;
+    const dx=b.x-g.c.x,dy=b.y-g.c.y,d=Math.hypot(dx,dy)||1,q=Math.min(1,d/300);
+    g.m.x+=(dx/d*5.5*g.k*q-g.m.x)*Math.min(1,dt*6); g.m.y+=(dy/d*4.5*g.k*q-g.m.y)*Math.min(1,dt*6);
+  }
 }
 function dibuixaUlls(){
   ctx.lineCap='round';
-  for(const u of ULLS){
-    if(parpella>0){
-      ctx.strokeStyle='#d9628a';ctx.lineWidth=3.5;
-      ctx.beginPath();ctx.arc(u.x,u.y-6,14,.2*Math.PI,.8*Math.PI);ctx.stroke();
+  for(const g of GATS)for(const u of g.ulls){
+    const k=g.k,m=g.m;
+    if(g.par>0){
+      ctx.strokeStyle='#d9628a';ctx.lineWidth=3.5*k;
+      ctx.beginPath();ctx.arc(u.x,u.y-6*k,14*k,.2*Math.PI,.8*Math.PI);ctx.stroke();
       continue;
     }
-    ctx.fillStyle='rgba(255,250,252,.9)';ctx.beginPath();ctx.arc(u.x,u.y,13,0,Math.PI*2);ctx.fill();
-    ctx.strokeStyle='#e47a9a';ctx.lineWidth=3;ctx.beginPath();ctx.arc(u.x,u.y,13,0,Math.PI*2);ctx.stroke();
-    ctx.strokeStyle='rgba(205,80,125,.5)';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(u.x+.8,u.y-.6,14.2,0,Math.PI*2);ctx.stroke();
-    ctx.fillStyle='#b4386c';ctx.beginPath();ctx.arc(u.x+mirada.x,u.y+mirada.y,5.5,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='rgba(255,255,255,.85)';ctx.beginPath();ctx.arc(u.x+mirada.x-1.8,u.y+mirada.y-2,1.6,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='rgba(255,250,252,.95)';ctx.beginPath();ctx.arc(u.x,u.y,13*k,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle='#e47a9a';ctx.lineWidth=3*k;ctx.beginPath();ctx.arc(u.x,u.y,13*k,0,Math.PI*2);ctx.stroke();
+    ctx.strokeStyle='rgba(205,80,125,.5)';ctx.lineWidth=1.5*k;ctx.beginPath();ctx.arc(u.x+.8*k,u.y-.6*k,14.2*k,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle='#b4386c';ctx.beginPath();ctx.arc(u.x+m.x,u.y+m.y,5.5*k,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,.85)';ctx.beginPath();ctx.arc(u.x+m.x-1.8*k,u.y+m.y-2*k,1.6*k,0,Math.PI*2);ctx.fill();
   }
 }
 
