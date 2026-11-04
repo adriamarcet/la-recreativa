@@ -2,3 +2,8 @@
 .netlify/
 node_modules/
 *.log
+
+# material de treball que no es publica (zips amb fotos originals, notes per a Claude)
+*.zip
+Claude outputs/
+jocs/*/CLAUDE.md
