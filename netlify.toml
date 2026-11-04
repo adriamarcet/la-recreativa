@@ -30,6 +30,11 @@
   to = "/jocs/menjallapis/"
   status = 301
 
+[[redirects]]
+  from = "/papallona"
+  to = "/jocs/papallona-golafre/"
+  status = 301
+
 # l'adreça antiga del joc de Fiore
 [[redirects]]
   from = "/jocs/fiore/*"

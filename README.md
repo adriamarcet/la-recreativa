@@ -9,6 +9,7 @@ Jocs en pixel art per jugar al navegador del mòbil, sense instal·lar res.
 | Blocaventura | 1 | `/jocs/blocaventura/` |
 | Turbocapitalisme: En Fiore contra el món | 1 | `/jocs/turbocapitalisme/` |
 | Dimoni del Turó | 1 (mòbil) o 1-2 (teclat/comandaments) | `/jocs/dimoni-del-turo/` |
+| La Papallona Golafre | 1 (mòbil de costat) | `/jocs/papallona-golafre/` (o `/papallona`) |
 
 ## Estructura
 
@@ -19,6 +20,7 @@ jocs/rei-de-lolla/index.html  Rei de l'Olla (un sol fitxer: HTML + CSS + JS)
 jocs/blocaventura/index.html  Blocaventura (un sol fitxer: HTML + CSS + JS)
 jocs/turbocapitalisme/index.html  Turbocapitalisme: En Fiore contra el món (un sol fitxer)
 jocs/dimoni-del-turo/index.html  Dimoni del Turó (un sol fitxer; canvas de 384×216)
+jocs/papallona-golafre/index.html  La Papallona Golafre (un sol fitxer amb els dibuixos incrustats; es juga en horitzontal)
 assets/fonts/                 Tipografia Press Start 2P (llicència OFL, a OFL.txt)
 assets/img/                   Captures per a la portada i favicon
 netlify.toml                  Configuració de Netlify (sense build)
